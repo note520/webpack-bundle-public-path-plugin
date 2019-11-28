@@ -4,7 +4,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // 复制html模板注入
 
 const WebpackBundlePublicPathPlugin = require('../dist');
-// const WebpackDynamicPublicPathPlugin = require("webpack-dynamic-public-path");
 
 module.exports = {
     entry: {
@@ -104,9 +103,6 @@ module.exports = {
             filename: 'index.html',
             template: 'index.html',
             inject: true,
-        }),
-        // new WebpackDynamicPublicPathPlugin({
-        //     externalPublicPath: "window.sitePublicPath"
-        // }),
+        })
     ],
 };
