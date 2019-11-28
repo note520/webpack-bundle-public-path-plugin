@@ -1,0 +1,45 @@
+{
+  "name": "webpack-bundle-public-path-plugin",
+  "version": "0.1.0",
+  "description": "dynamic override the Webpack modules public path in web page runtime",
+  "main": "dist/index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "example"
+  },
+  "scripts": {
+    "build:dev": "npm run build && npm run build:example",
+    "build": "cross-env NODE_ENV=production babel src -d dist --ignore \"src/**/*.test.js\" --copy-files",
+    "clean": "del-cli dist",
+    "build:example": "webpack --config example/webpack.config.js",
+    "clean:example": "del-cli example/dist",
+    "test:build": "npm run build && npm run build:example"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/note520/webpack-bundle-public-path-plugin"
+  },
+  "author": "ricopter@qq.com",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.6.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-add-module-exports": "^1.0.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "cross-env": "^5.2.1",
+    "del": "^5.1.0",
+    "del-cli": "^2.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.8"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "package.json"
+  ]
+}
