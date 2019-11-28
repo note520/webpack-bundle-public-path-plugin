@@ -34,3 +34,5 @@ plugins:[
 - ![avatar](./docs/demo1.png)
 - ![avatar](./docs/demo2.png)
 
+##### 感谢
+- webpack-dynamic-public-path
