@@ -30,6 +30,21 @@ plugins:[
  window.asyncPublicPath = "http://localtest.me/webpackCode/webpack-bundle-public-path-plugin/example/dist/"
 ```
 
+##### 可能会遇到的问题
+- 配合其他插件有有涉及 publicPath 的地方需要谨慎使用,比如 mini-css-extract-plugin 
+```
+// mini-css-extract-plugin 修复的方法如下
+ {
+    loader: MiniCssExtractPlugin.loader,
+    options: {
+        // 重置publicPath
+        publicPath: (resourcePath, context) => {
+            return "";
+        }
+    }
+    },
+```
+
 ##### 演示截屏
 - ![avatar](./docs/demo1.png)
 - ![avatar](./docs/demo2.png)
