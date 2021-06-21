@@ -2,7 +2,7 @@
 > webpack5 dynamic override public path in webPage runtime.
 
 #### 介绍
-> 支持webpack5 动态改变webpack异步请求代码块（chunk请求前缀）以及静态资源（超出限制后的请求前缀） **publicPath** 路径
+> 支持webpack5 动态改变webpack异步请求代码块（chunk请求前缀） **publicPath** 路径
 
 ##### 安装配置
 ```
