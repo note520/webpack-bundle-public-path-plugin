@@ -2,18 +2,19 @@ const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // 复制html模板注入
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const WebpackBundlePublicPathPlugin = require('../dist');
+const WebpackBundlePublicPathPlugin = require('../src/index');
 
-module.exports = {
+const webpackConfig = {
     entry: {
         'app': path.resolve(__dirname, 'src', 'main.js'),
-       // 'index': path.resolve(__dirname, 'src', 'index.js'),
+        // 'index': path.resolve(__dirname, 'src', 'index.js'),
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
-        publicPath: "http://localhost/webpackCode/webpack-bundle-public-path-plugin/example/dist/"
+        // publicPath: "http://localhost/webpackCode/webpack-bundle-public-path-plugin/example/dist/"
         // 为动态加载的 Chunk 配置输出文件的名称
         // chunkFilename: '[name].bundle.js',
     },
@@ -32,10 +33,10 @@ module.exports = {
                     path.resolve(__dirname, '../node_modules')
                 ],
                 loader: require.resolve('babel-loader'),
-                // options: {
-                //     presets: ['@babel/preset-env'],
-                //     plugins: ['@babel/plugin-syntax-dynamic-import']
-                // }
+                options: {
+                    presets: ['@babel/preset-env'],
+                    plugins: ['@babel/plugin-syntax-dynamic-import']
+                }
             },
             // 图片加载
             {
@@ -59,7 +60,18 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [ 'style-loader', 'css-loader' ]
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: (resourcePath, context) => {
+                                return webpackConfig.output.publicPath?webpackConfig.output.publicPath:"";
+                            }
+                        }
+                    },
+                    // 'style-loader',
+                    'css-loader'
+                ]
             }
         ]
     },
@@ -68,7 +80,11 @@ module.exports = {
             'node_modules',
             path.resolve(__dirname, 'src')
         ],
-        extensions: ['.js', '.json', '.jsx', '.css']
+        extensions: ['.js', '.json', '.jsx', '.css'],
+        alias:{
+            '@':'src',
+            'vue$': 'vue/dist/vue.esm.js'
+        }
     },
     mode: 'production',// 'development'
     optimization: {
@@ -84,9 +100,9 @@ module.exports = {
                 },
             }
         },
-        // runtimeChunk: {
-        //     name: 'common'
-        // }
+        runtimeChunk: {
+            name: 'common'
+        }
     },
     //devtool: 'cheap-module-source-map',
     devtool: false,
@@ -96,6 +112,9 @@ module.exports = {
     plugins: [
         new VueLoaderPlugin(),// 请确保引入这个插件！
         new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+        }),
         // 顺序问题很重要
         new WebpackBundlePublicPathPlugin(),
         // 配置化模板注入替换
@@ -103,6 +122,14 @@ module.exports = {
             filename: 'index.html',
             template: 'index.html',
             inject: true,
+            minify:false,
+            // scriptLoading:"blocking"
         })
     ],
-};
+    // externals:{
+    //     'Vue': 'Vue',
+    //     'element-ui': 'Element',
+    // },
+}
+
+module.exports = webpackConfig;

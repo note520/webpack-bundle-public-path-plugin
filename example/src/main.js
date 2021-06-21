@@ -12,8 +12,7 @@ import ('./second-chunk').then((data)=>{
 });
 
 const chunkList = _.chunk(['a', 'b', 'c', 'd'], 2);
-console.log('index page',chunkList);
-
+console.log('index page 1',chunkList);
 
 new Vue({
     el: '#root',

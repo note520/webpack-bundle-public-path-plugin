@@ -2,6 +2,7 @@
     <div id="app">
         <div class="page">
             <h1>hell Vue App</h1>
+            <el-button>默认按钮</el-button>
             <div class="img-box">
 
             </div>
